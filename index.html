@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mis programas JavaScript</title>
+<style>
+:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#eaf5ff;--card:#fff;--blue:#4aa8e8;--blue-d:#2a86c6;--soft:#d6ecfc;--text:#17364d;--muted:#5d7a90}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.45}
+header{background:linear-gradient(135deg,#8ccbf5,#4aa8e8);color:#fff;padding:22px 16px 18px;text-align:center}
+header h1{margin:0 0 4px;font-size:1.5rem}
+header p{margin:0;opacity:.95;font-size:.95rem}
+main{max-width:1000px;margin:0 auto;padding:16px}
+#q{width:100%;padding:12px 14px;border:2px solid var(--soft);border-radius:12px;font-size:1rem;background:#fff;color:var(--text)}
+#q:focus{outline:none;border-color:var(--blue)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+.chip{border:2px solid var(--blue);background:#fff;color:var(--blue-d);padding:7px 14px;border-radius:999px;font-size:.9rem;cursor:pointer}
+.chip.on{background:var(--blue);color:#fff}
+h2{font-size:1.15rem;margin:22px 0 10px;color:var(--blue-d);border-bottom:2px solid var(--soft);padding-bottom:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.card{background:var(--card);border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(42,134,198,.12);display:flex;flex-direction:column;gap:10px;min-width:0}
+.card h3{margin:0;font-size:1rem}
+.tag{display:inline-block;background:var(--soft);color:var(--blue-d);font-size:.75rem;padding:2px 10px;border-radius:999px;width:fit-content}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+button.b{border:0;border-radius:10px;padding:9px 14px;font-size:.9rem;cursor:pointer;background:var(--soft);color:var(--blue-d)}
+button.b.run{background:var(--blue);color:#fff}
+pre{margin:0;background:#f4faff;border:1px solid var(--soft);border-radius:10px;padding:10px;overflow-x:auto;font-size:.78rem;max-height:300px}
+.run-panel{border-top:1px dashed var(--soft);padding-top:10px;display:flex;flex-direction:column;gap:8px}
+.run-panel label{font-size:.85rem;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.run-panel input,.run-panel select{padding:9px;border:2px solid var(--soft);border-radius:8px;font-size:.95rem;color:var(--text);background:#fff}
+iframe{width:100%;height:160px;border:1px solid var(--soft);border-radius:10px;background:#fff}
+.out{background:#f4faff;border:1px solid var(--soft);border-radius:10px;padding:8px;font-size:.85rem;min-height:36px;white-space:pre-wrap;word-break:break-word}
+.out .err{color:#c0392b}.out .al{color:#1b6ca8;font-weight:600}.out .in{color:var(--muted)}
+.hidden{display:none}
+.empty{text-align:center;color:var(--muted);padding:30px 0}
+</style>
+</head>
+<body>
+<header>
+<h1>Mis programas JavaScript</h1>
+<p>Busca, mira el código y ejecútalo</p>
+</header>
+<main>
+<input id="q" type="search" placeholder="Buscar programa, categoría o código...">
+<div class="chips" id="chips"></div>
+<div id="list"></div>
+<div class="empty hidden" id="empty">No se encontraron programas.</div>
+</main>
+
+<script>
+/* Para agregar más programas: añade un objeto a esta lista (titulo, cat, prompts, code). */
+var P = [
+{titulo:"Suma de dos números",cat:"Entrada de datos y operaciones",prompts:["Escribe el primer número","Escribe el número 2"],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let numero1 = Number(prompt(" escribe el primer numero"));
+        let n2=Number(prompt(" escribe el numero 2"));
+        let suma=numero1+n2;
+        alet ("la suma es:"+ suma);
+    <\/script>
+</body>
+</html>`},
+{titulo:"Datos personales (do...while)",cat:"Ciclo do...while",prompts:["Ingresa tu nombre","Ingresa tu edad","Ingresa tu dirección"],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let nombre = prompt("Ingresa tu nombre");
+let edad = prompt("Ingresa tu edad");
+let direccion = prompt("Ingresa tu dirección");
+
+do {
+    console.log("Nombre: " + nombre);
+    console.log("Edad: " + edad);
+    console.log("Dirección: " + direccion);
+} while (false);
+    <\/script>
+</body>
+</html>`},
+{titulo:"Fruta favorita (do...while)",cat:"Ciclo do...while",prompts:["Escribe una fruta"],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let fruta;
+
+do {
+    fruta = prompt("Escribe una fruta");
+} while (fruta == "");
+
+console.log("Tu fruta favorita es: " + fruta);
+    <\/script>
+</body>
+</html>`},
+{titulo:"Mascota (do...while)",cat:"Ciclo do...while",prompts:["¿Qué mascota tienes?","¿Cómo se llama?"],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let mascota = prompt("¿Qué mascota tienes?");
+let nombre = prompt("¿Cómo se llama?");
+
+do {
+    console.log("Mascota: " + mascota);
+    console.log("Nombre: " + nombre);
+} while (false);
+    <\/script>
+</body>
+</html>`},
+{titulo:"Insertar una imagen",cat:"DOM",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="imagen"></div>
+    <script>
+        document.getElementById("imagen").innerHTML='<img src="logo.png" alt="logo">';
+    <\/script>
+</body>
+</html>`},
+{titulo:"Cambiar texto con innerHTML",cat:"DOM",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="mensaje"> hola mundo</p>
+    <script>
+        document.getElementById("mensaje").innerHTML="¡Bienvenido!";
+    <\/script>
+</body>
+</html>`},
+{titulo:"Cambiar texto con textContent",cat:"DOM",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="aviso">mensaje inicial</p>
+    <script>
+        var elemento =document.getElementById("aviso");
+        lemento.texContent="hola estudiantes";
+    <\/script>
+</body>
+</html>`},
+{titulo:"Cambiar color con querySelector",cat:"DOM",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p class="destacado"> texto importante</p>
+    <script>
+        document.querySelector("destacado").style.color="red";
+
+    <\/script>
+</body>
+</html>`},
+{titulo:"Color de fondo de un botón",cat:"DOM",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">haz clic </button>
+    <script>
+        document.getElementById("btn").style.backgroundColor="lightblue";
+    <\/script>
+</body>
+</html>`},
+{titulo:"Deshabilitar un botón",cat:"DOM",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button class="btn">enviar</button>
+    <script>
+        document.querySelector("btn").disabled=true;
+    <\/script>
+</body>
+</html>`},
+{titulo:"Nombre y edad con alert",cat:"Entrada de datos y operaciones",prompts:["escribe tu nombre","escribe tu edad"],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>aprendiendo javascrip</h1>
+    <script>
+        let nombre = prompt ('escribe tu nombre');
+        alert ("mi nombre es:"+nombre);
+        let edad = numbre(prompt('escribe tu edad'));
+        alert ("tu edad es:"+ edad);
+
+    <\/script>
+</body>
+</html>`},
+{titulo:"Datos con document.write",cat:"Entrada de datos y operaciones",prompts:["escribe tu nombre:","escribe tu edad:","escribe tu especialidad :","escribe tu direccion:"],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> datos </h1>
+    <script>
+    let nombre =(prompt('escribe tu nombre:'));
+    let edad = Number(prompt ('escribe tu edad:'));
+    let especialidad = (prompt ('escribe tu especialidad :'));
+    let direccion = (prompt ('escribe tu direccion:'));
+
+    document.write ("nombre:"+nombre+"<br>");
+    
+    document.write("edad:"+edad+"<br>");
+    document.write("especialidad:"+especialidad+"<br>");
+    document.write("direccion:"+ direccion +"<br>");
+    
+    
+    
+    
+   <\/script> 
+</body>
+</html>`},
+{titulo:"Registrar datos con confirm",cat:"Condicionales: if / else / else if",prompts:[{c:"¿Deseas registrar tus datos?"},"escribe tu nombre:","escribe tu edad:","escribe tu especialidad :"],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const continuar = confirm(' desear registrar tus datod?');
+        if (continuar){
+            let nombre =(prompt('escribe tu nombre:'));
+    let edad = Number(prompt ('escribe tu edad:'));
+    let especialidad = (prompt ('escribe tu especialidad :'));
+     document.write (" tu nombre es :"+nombre+"<br>");
+    
+    document.write("tu especialidad es:"+especialidad+"<br>"+ edad );
+        }
+        else{
+            alert('tengo flojera');l
+        }
+    <\/script>
+</body>
+</html>`},
+{titulo:"¿Puedes votar? (if / else)",cat:"Condicionales: if / else / else if",prompts:["escribe tu edad"],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    
+    let edad=Number(prompt("escribe tu edad"));  
+    if(edad>=18){
+        alert ("puedes votar"+edad);
+    
+    }else{
+        alert("no eres cuidadano");
+    }
+    <\/script>
+</body>
+</html>`},
+{titulo:"Laboratorio según semestre (else if)",cat:"Condicionales: if / else / else if",prompts:["escribe tu semestre "],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+         let semestre=Number(prompt("escribe tu semestre "));
+          if(semestre>=5){
+            document.write(" puedes entrar al laboratorio 3 ");
+
+          }else if (semestre<5){
+            document.write(" solo puedes entrar al laboratorio 1  ");
+          }
+
+    <\/script>
+</body>
+</html>`},
+{titulo:"Número positivo, negativo o cero",cat:"Condicionales: if / else / else if",prompts:["escribe el numero "],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+         let num=Number(prompt("escribe el numero "));
+          if(num<0){
+            document.write(" el numero es negativo ");
+
+          }else if (num>0){
+            document.write(" el numero es positivo ");
+          }else if(num =0 ){
+            document.write(" el numero es igual a 0");
+
+          }
+
+    <\/script>
+</body>
+</html>`},
+{titulo:"Número mayor entre dos",cat:"Condicionales: if / else / else if",prompts:["escribe el primeros numero ","escribe el segundo numero"],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let num1=Number(prompt("escribe el primeros numero "));
+        let num2=Number(prompt("escribe el segundo numero"));
+        if(num1>num2){
+            document.write(" el numero mayor es :"+num1);
+        }else if (num2>num1){
+            document.write("el numero mayor es:"+num2);
+        }else{
+          document.write("los dos numeros son iguales");  
+        }
+            
+            <\/script>
+</body>
+</html>`},
+{titulo:"Promedio: aprobado o no",cat:"Condicionales: if / else / else if",prompts:["escribe tu nombre"," nombre de tu asignatura","introduce tu promedio"],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <script>
+    let nombre=prompt("escribe tu nombre");
+    let asignatura=prompt(" nombre de tu asignatura");
+    let promedio=Number (prompt("introduce tu promedio"));
+    if (promedio>=6){
+        document.write ("APROVASTE"+"<br>");
+        
+        document.write("nombre:"+nombre+"<br>");
+        document.write("materia:"+materia+"<br>");
+        document.write("promedio:"+promedio+"<br>");
+    }else{
+        document.write ("ESFUERZATE"+promedio);
+        
+
+    }
+ <\/script>
+</body>
+</html>`},
+{titulo:"Recorrer lista de nombres",cat:"Ciclo for",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let nombres = ["zaira", "ilse", "yesenia", "tlanezi"];
+        for (let i = 0; i < nombres.length; i++) {
+    console.log(nombres[i]);
+}
+    <\/script>
+    
+
+ 
+</body>
+</html>`},
+{titulo:"Recorrer lista de frutas",cat:"Ciclo for",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       let frutas = ["Manzana", "Pera", "Uva", "Mango"];
+
+for (let i = 0; i < frutas.length; i++) {
+    console.log("Fruta: " + frutas[i]);
+} 
+    <\/script>
+</body>
+</html>`},
+{titulo:"Recorrer lista de animales",cat:"Ciclo for",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let animales = ["Perro", "Gato", "Conejo", "Pajaro"];
+
+for (let i = 0; i < animales.length; i++) {
+    console.log("Animal: " + animales[i]);
+}
+    <\/script>
+</body>
+</html>`},
+{titulo:"Recorrer lista de materias",cat:"Ciclo for",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+ let materias = ["Matematicas", "Ingles", "Programacion", "Historia"];
+
+for (let i = 0; i < materias.length; i++) {
+    console.log("Materia: " + materias[i]);
+}
+    <\/script>
+</body>
+</html>`},
+{titulo:"Nombre obligatorio (do...while)",cat:"Ciclo do...while",prompts:["Escribe tu nombre"],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       let nombre;
+
+do {
+    nombre = prompt("Escribe tu nombre");
+} while (nombre == "");
+
+console.log("Hola " + nombre); 
+    <\/script>
+</body>
+</html>`},
+{titulo:"Función con alert",cat:"Funciones",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function mensaje(){
+           alert("bienvenidos a javascript")
+
+        }
+        mensaje();
+    <\/script>
+</body>
+</html>`},
+{titulo:"Función anónima (despedida)",cat:"Funciones",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let despedida=function(){
+
+            document.write( "hasta mañana"); 
+        };
+        despedida();
+    <\/script>
+</body>
+</html>`},
+{titulo:"Función con parámetro (grupos)",cat:"Funciones",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    function especialidad (grupo){
+            document.write ("hola,!"+ grupo);
+
+        }
+        especialidad("5AVP");
+        especialidad("5AMP");
+        especialidad("5AMS");
+        
+
+        
+    <\/script>
+</body>
+</html>`},
+{titulo:"Función saludo simple",cat:"Funciones",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function saludo(){
+            document.write( "como estas?"); 
+        }
+        saludo();
+    <\/script>
+</body>
+</html>`},
+{titulo:"Función saludo con parámetro",cat:"Funciones",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function saludo (nombre){
+            document.write ("hola,!"+ nombre);
+
+        }
+        saludo("maria victoria");
+        saludo("maria guadalupe");
+    <\/script>
+</body>
+</html>`},
+{titulo:"Función con return (sumar)",cat:"Funciones",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function sumar(a,b){
+            return a+b;
+        }
+        let resultado = sumar(5,10);
+        document.write(resultado);
+    <\/script>
+</body>
+</html>`},
+{titulo:"Método getElementById",cat:"Métodos",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="prueba"> the document object</h1>
+    <h2>the getElementsByid() Method</h2>
+    <script>
+        const element=document.getElementById("prueba");
+        MyElement.style.color="pink";
+    <\/script>
+</body>
+</html>`},
+{titulo:"Método getElementsByClassName",cat:"Métodos",prompts:[],code:`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>The Document Object</h1>
+<h2>The getElementsByClassName() Method</h2>
+
+<p>Change the background color of the first element with the classes "example" and "color":</p>
+
+<div class="example">
+  <p>This is a paragraph.</p>
+</div>
+<br>
+<div class="example color">
+  <p>This is a paragraph.</p>
+</div>
+<br>
+<div class="example color">
+  <p>This is a paragraph.</p>
+</div>
+
+<script>
+const collection = document.getElementsByClassName("example color");
+collection[0].style.backgroundColor = "pink";
+<\/script>
+</body>
+</html>`}
+];
+
+var ORDER = ["Entrada de datos y operaciones","Condicionales: if / else / else if","Ciclo for","Ciclo do...while","Funciones","Métodos","DOM"];
+var cats = ["Todos"].concat(ORDER.filter(function(c){return P.some(function(p){return p.cat===c})}));
+var cur = "Todos";
+var chipsEl = document.getElementById("chips"), listEl = document.getElementById("list"), qEl = document.getElementById("q");
+
+function el(tag, cls, txt){var e=document.createElement(tag); if(cls)e.className=cls; if(txt!==undefined)e.textContent=txt; return e;}
+
+function render(){
+  var q = qEl.value.trim().toLowerCase();
+  chipsEl.innerHTML = "";
+  cats.forEach(function(c){
+    var b = el("button","chip"+(c===cur?" on":""),c);
+    b.onclick = function(){cur=c; render();};
+    chipsEl.appendChild(b);
+  });
+  listEl.innerHTML = "";
+  var shown = 0;
+  cats.slice(1).forEach(function(c){
+    if(cur!=="Todos" && cur!==c) return;
+    var items = P.filter(function(p){
+      return p.cat===c && (!q || (p.titulo+" "+p.cat+" "+p.code).toLowerCase().indexOf(q)>-1);
+    });
+    if(!items.length) return;
+    listEl.appendChild(el("h2","",c));
+    var g = el("div","grid");
+    items.forEach(function(p){g.appendChild(card(p)); shown++;});
+    listEl.appendChild(g);
+  });
+  document.getElementById("empty").classList.toggle("hidden", shown>0);
+}
+
+function card(p){
+  var c = el("div","card");
+  c.appendChild(el("h3","",p.titulo));
+  c.appendChild(el("span","tag",p.cat));
+  var btns = el("div","btns");
+  var bCode = el("button","b","Ver código");
+  var bRun = el("button","b run","Ejecutar");
+  btns.appendChild(bCode); btns.appendChild(bRun);
+  c.appendChild(btns);
+  var pre = el("pre","hidden"); pre.appendChild(el("code","",p.code));
+  c.appendChild(pre);
+  bCode.onclick = function(){
+    pre.classList.toggle("hidden");
+    bCode.textContent = pre.classList.contains("hidden") ? "Ver código" : "Ocultar código";
+  };
+  var panel = null;
+  bRun.onclick = function(){
+    if(panel){panel.remove(); panel=null; bRun.textContent="Ejecutar"; return;}
+    panel = runPanel(p); c.appendChild(panel); bRun.textContent="Cerrar";
+  };
+  return c;
+}
+
+function runPanel(p){
+  var wrap = el("div","run-panel");
+  var inputs = p.prompts.map(function(lbl){
+    var isC = typeof lbl==="object";
+    var l = el("label","",isC?lbl.c:lbl); var i;
+    if(isC){i=document.createElement("select"); [["1","Aceptar (Sí)"],["","Cancelar (No)"]].forEach(function(o){var op=el("option","",o[1]); op.value=o[0]; i.appendChild(op);});}
+    else{i=el("input"); i.type="text";}
+    l.appendChild(i); wrap.appendChild(l); return i;
+  });
+  var go = el("button","b run","▶ Correr programa");
+  wrap.appendChild(go);
+  var out = el("div","out","La salida aparecerá aquí.");
+  var holder = el("div");
+  wrap.appendChild(holder); wrap.appendChild(out);
+  go.onclick = function(){
+    var vals = inputs.map(function(i){return i.value});
+    out.innerHTML = "";
+    var shim = "<script>(function(){var V="+JSON.stringify(vals).replace(/</g,"\\u003c")+",i=0;function s(t,x){parent.postMessage({t:t,x:x},'*')}"+
+      "window.prompt=function(q){if(i>=V.length){throw new Error('El programa pidió otro dato y ya no hay más campos.')}s('in',q+' → '+V[i]);return V[i++]};"+
+      "window.alert=function(m){s('al',String(m))};"+
+      "window.confirm=function(q){if(i>=V.length){throw new Error('El programa pidió otro dato y ya no hay más campos.')}var r=V[i++]==='1';s('in',q+' → '+(r?'Aceptar':'Cancelar'));return r};"+
+      "console.log=function(){s('log',[].slice.call(arguments).join(' '))};"+
+      "window.addEventListener('error',function(e){s('err',e.message)});})()<\/script>";
+    var html = p.code.replace("<head>","<head>"+shim);
+    holder.innerHTML = "";
+    var f = document.createElement("iframe");
+    f.setAttribute("sandbox","allow-scripts");
+    function onMsg(e){
+      if(e.source!==f.contentWindow) return;
+      var d = e.data, line = el("div", d.t==="err"?"err":d.t==="al"?"al":d.t==="in"?"in":"", (d.t==="err"?"Error: ":d.t==="al"?"Alerta: ":d.t==="in"?"Dato: ":"")+d.x);
+      out.appendChild(line);
+    }
+    window.addEventListener("message", onMsg);
+    f.srcdoc = html;
+    holder.appendChild(f);
+    setTimeout(function(){ if(!out.children.length) out.textContent="(El programa no mostró mensajes; revisa la vista de arriba.)"; },500);
+  };
+  return wrap;
+}
+
+qEl.addEventListener("input", render);
+render();
+</script>
+</body>
+</html>
